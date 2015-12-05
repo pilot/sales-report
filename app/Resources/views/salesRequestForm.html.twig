@@ -32,6 +32,8 @@
         {% else %}
             <tr><td>Закупок не найдено</td></tr>
         {% endfor %}
-
     </table>
+    <div class="pagerfanta">
+        {{ pagerfanta(sales, 'twitter_bootstrap') }}
+    </div>
 {% endblock %}

@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sale;
 use AppBundle\Form\Type\SalesAddFormType;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,21 +55,27 @@ class DefaultController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $form->submit($request);
+            $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findBy(array(
+                'region' => $form['region']->getData(),
+                'hasTransportDelivery' => true
+            ))));
+            $pagerfanta->setMaxPerPage(20);
+            $pagerfanta->setCurrentPage($request->get('page', 1));
             if (!is_null($form['region']->getData())) {
                 return $this->render('salesRequestForm.html.twig', array(
                     'form' => $this->createForm(new SalesAddFormType())->createView(),
-                    'sales' => $em->getRepository('AppBundle:Sale')->findBy(array(
-                        'region' => $form['region']->getData(),
-                        'hasTransportDelivery' => true
-                    )),
+                    'sales' => $pagerfanta,
                     'regionDescr' => Sale::$regionDescr
                 ));
             }
         }
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findAll()));
+        $pagerfanta->setMaxPerPage(20);
+        $pagerfanta->setCurrentPage($request->get('page', 1));
 
         return $this->render('salesRequestForm.html.twig', array(
             'form' => $form->createView(),
-            'sales' => $em->getRepository('AppBundle:Sale')->findAll(),
+            'sales' => $pagerfanta,
             'regionDescr' => Sale::$regionDescr
         ));
     }
