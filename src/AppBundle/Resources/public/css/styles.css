@@ -21,3 +21,26 @@ html, body {
 .invisible {
     display: none;
 }
+
+.form-request {
+    margin-top: 40px;
+}
+
+.form-request .form-group {
+    float: left;
+}
+
+.form-request label {
+    display: inline;
+    vertical-align: super;
+    margin-right: 20px;
+}
+
+.form-request button {
+    margin-left: 20px;
+}
+
+table tr:hover {
+    cursor: pointer;
+    color: darkcyan;
+}

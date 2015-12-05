@@ -17,7 +17,7 @@ class SalesAddFormType extends AbstractType
                 'choices' => Sale::$regionDescr,
                 'empty_value' => 'Выберите регион',
                 'label' => 'Регион',
-                'required' => true,
+                'required' => false,
                 'constraints' => array(
                     new NotBlank([
                         'message' => "Выберите регион"

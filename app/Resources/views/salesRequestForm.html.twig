@@ -1,0 +1,37 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <form action="{{ path('sale_request') }}" method="post" class="form-request">
+        <fieldset>
+            <div class="form-group">
+                {{ form_label(form.region) }}
+                {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Найти</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Регион</td>
+                <td>Дата закупки</td>
+                <td>Ссылка</td>
+            </tr>
+        </thead>
+        {% for sale in sales %}
+            <tr>
+                <td>{{ sale.id }}</td>
+                <td>{{ sale.region }}</td>
+                <td>{{ sale.saleDate }}</td>
+                <td>{{ sale.link }}</td>
+            </tr>
+        {% else %}
+            <tr><td>Закупок не найдено</td></tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}
