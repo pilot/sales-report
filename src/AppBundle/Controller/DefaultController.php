@@ -56,14 +56,19 @@ class DefaultController extends Controller
             if (!is_null($form['region']->getData())) {
                 return $this->render('salesRequestForm.html.twig', array(
                     'form' => $this->createForm(new SalesAddFormType())->createView(),
-                    'sales' => $em->getRepository('AppBundle:Sale')->findByRegion($form['region']->getData())
+                    'sales' => $em->getRepository('AppBundle:Sale')->findBy(array(
+                        'region' => $form['region']->getData(),
+                        'hasTransportDelivery' => true
+                    )),
+                    'regionDescr' => Sale::$regionDescr
                 ));
             }
         }
 
         return $this->render('salesRequestForm.html.twig', array(
             'form' => $form->createView(),
-            'sales' => $em->getRepository('AppBundle:Sale')->findAll()
+            'sales' => $em->getRepository('AppBundle:Sale')->findAll(),
+            'regionDescr' => Sale::$regionDescr
         ));
     }
 }

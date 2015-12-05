@@ -25,7 +25,7 @@
         {% for sale in sales %}
             <tr>
                 <td>{{ sale.id }}</td>
-                <td>{{ sale.region }}</td>
+                <td>{{ regionDescr[sale.region] }}</td>
                 <td>{{ sale.saleDate }}</td>
                 <td>{{ sale.link }}</td>
             </tr>
