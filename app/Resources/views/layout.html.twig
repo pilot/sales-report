@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title '' %} - Sales report application</title>
+
+    <link href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/datepicker.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/styles.css') }}" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">{% block content %}{% endblock %}</div>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/jquery-1.11.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/js/bootstrap-datepicker.ru.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            if ($("input.datepicker").length) {
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    startDate: '0d',
+                    language: 'ru'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

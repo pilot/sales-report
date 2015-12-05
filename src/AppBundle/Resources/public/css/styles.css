@@ -1,0 +1,23 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.form-add {
+    width: 240px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.form-add .actions {
+    margin-top: 20px;
+}
+
+.alert.alert-error li {
+    list-style: none;
+}
+
+.invisible {
+    display: none;
+}

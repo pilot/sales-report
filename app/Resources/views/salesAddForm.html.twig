@@ -1,0 +1,41 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <form action="{{ path('sale_add') }}" method="post" {{ form_enctype(form) }} class="form-add">
+        <fieldset>
+            {% if app.request.method == 'POST' and success %}
+                <div class="alert alert-success">
+                    Успешно сохранено
+                </div>
+            {% endif %}
+            <div class="form-group">
+                {{ form_label(form.region) }}
+                <div class="alert alert-error {{ form_errors(form.region)|length < 1 ? 'invisible' : '' }}">
+                    {{ form_errors(form.region) }}
+                </div>
+                {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="input-row">
+                {{ form_label(form.saleDate) }}
+                <div class="alert alert-error {{ form_errors(form.saleDate)|length < 1 ? 'invisible' : '' }}">
+                    {{ form_errors(form.saleDate) }}
+                </div>
+                {{ form_widget(form.saleDate, {'attr': {'class': 'datepicker', 'placeholder': 'Выберите дату' }}) }}
+            </div>
+            <div class="input-row">
+                {{ form_label(form.link) }}
+                <div class="alert alert-error {{ form_errors(form.link)|length < 1 ? 'invisible' : '' }}">
+                    {{ form_errors(form.link) }}
+                </div>
+                {{ form_widget(form.link) }}
+            </div>
+            <div class="input-row">
+                {{ form_label(form.hasTransportDelivery) }}
+                {{ form_widget(form.hasTransportDelivery) }}
+            </div>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">Разместить</button>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
