@@ -1,17 +1,19 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    <form action="{{ path('sale_request') }}" method="post" class="form-request">
-        <fieldset>
-            <div class="form-group">
-                {{ form_label(form.region) }}
-                {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
-            </div>
-            <div class="actions">
-                <button type="submit" class="btn btn-primary">Найти</button>
-            </div>
-        </fieldset>
-    </form>
+    {% if form %}
+        <form action="{{ path('sale_request', {'id' : regionId}) }}" method="post" class="form-request">
+            <fieldset>
+                <div class="form-group">
+                    {{ form_label(form.region) }}
+                    {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Найти</button>
+                </div>
+            </fieldset>
+        </form>
+    {% endif %}
 
     <table class="table table-striped">
         <thead>
@@ -30,10 +32,26 @@
                 <td>{{ sale.link }}</td>
             </tr>
         {% else %}
-            <tr><td>Закупок не найдено</td></tr>
+            {% if app.request.method == 'POST' %}
+                <tr>
+                    <td>Закупок не найдено</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </table>
-    <div class="pagerfanta">
-        {{ pagerfanta(sales, 'twitter_bootstrap') }}
-    </div>
+    {% if sales|length > 0 %}
+        <div class="pagerfanta">
+            {{ pagerfanta(sales, 'twitter_bootstrap') }}
+        </div>
+    {% endif %}
 {% endblock %}

@@ -53,28 +53,40 @@ class DefaultController extends Controller
         $em = $this->container->get('doctrine')->getEntityManager();
         $form = $this->createForm(new SalesAddFormType());
 
-        if ($request->getMethod() == 'POST') {
+        if (!is_null($request->get('region')) || $request->getMethod() == 'POST') {
             $form->submit($request);
             $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findBy(array(
-                'region' => $form['region']->getData(),
+                'region' => is_null($form['region']->getData()) ? $request->get('region') : $form['region']->getData(),
                 'hasTransportDelivery' => true
             ))));
-            $pagerfanta->setMaxPerPage(20);
             $pagerfanta->setCurrentPage($request->get('page', 1));
-            if (!is_null($form['region']->getData())) {
-                return $this->render('salesRequestForm.html.twig', array(
-                    'form' => $this->createForm(new SalesAddFormType())->createView(),
-                    'sales' => $pagerfanta,
-                    'regionDescr' => Sale::$regionDescr
-                ));
-            }
+
+            return $this->render('salesRequestForm.html.twig', array(
+                'form' => $this->createForm(new SalesAddFormType())->createView(),
+                'sales' => $pagerfanta,
+                'regionDescr' => Sale::$regionDescr
+            ));
         }
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findAll()));
-        $pagerfanta->setMaxPerPage(20);
-        $pagerfanta->setCurrentPage($request->get('page', 1));
 
         return $this->render('salesRequestForm.html.twig', array(
             'form' => $form->createView(),
+            'sales' => new Pagerfanta(new ArrayAdapter(array())),
+            'regionDescr' => Sale::$regionDescr
+        ));
+    }
+
+    /**
+     * @Route("/sales/list", name="sale_list")
+     */
+    public function listAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findAll()));
+        $pagerfanta->setCurrentPage($request->get('page', 1));
+
+        return $this->render('salesRequestForm.html.twig', array(
+            'form' => false,
             'sales' => $pagerfanta,
             'regionDescr' => Sale::$regionDescr
         ));
