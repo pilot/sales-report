@@ -43,7 +43,7 @@ class SalesAddFormType extends AbstractType
                 ),
             ))
             ->add('hasTransportDelivery', 'checkbox', array(
-                'label' => 'Отправить транспортной команией',
+                'label' => 'Отправление транспортной компанией розничным клиентам',
                 'required' => false
             ));
     }
