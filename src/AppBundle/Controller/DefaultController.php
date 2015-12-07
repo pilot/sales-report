@@ -62,14 +62,16 @@ class DefaultController extends Controller
             return $this->render('salesRequestForm.html.twig', array(
                 'form' => $this->createForm(new SalesAddFormType())->createView(),
                 'sales' => $pagerfanta,
-                'regionDescr' => Sale::$regionDescr
+                'regionDescr' => Sale::$regionDescr,
+                'regionSearch' => is_null($form['region']->getData()) ? $request->get('region', 1) : $form['region']->getData()
             ));
         }
 
         return $this->render('salesRequestForm.html.twig', array(
             'form' => $form->createView(),
             'sales' => new Pagerfanta(new ArrayAdapter(array())),
-            'regionDescr' => Sale::$regionDescr
+            'regionDescr' => Sale::$regionDescr,
+            'regionSearch' => false
         ));
     }
 

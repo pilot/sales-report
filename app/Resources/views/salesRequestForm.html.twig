@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if form %}
-        <form action="{{ path('sale_request', {'id' : regionId}) }}" method="post" class="form-request">
+        <form action="{{ path('sale_request') }}" method="post" class="form-request">
             <fieldset>
                 <div class="form-group">
                     {{ form_label(form.region) }}
@@ -10,6 +10,9 @@
                 </div>
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Найти</button>
+                </div>
+                <div>
+                    {% if regionSearch %}<span>Найдено по региону: {{ regionDescr[regionSearch] }}</span>{% endif %}
                 </div>
             </fieldset>
         </form>

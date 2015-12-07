@@ -50,5 +50,11 @@ table {
 }
 
 form + table {
-    margin-top: 0;
+    margin-top: 40px;
+}
+
+.form-request .actions + div {
+    position: absolute;
+    margin-top: 20px;
+    text-decoration: underline;
 }
