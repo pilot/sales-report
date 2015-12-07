@@ -55,10 +55,7 @@ class DefaultController extends Controller
 
         if (!is_null($request->get('region')) || $request->getMethod() == 'POST') {
             $form->submit($request);
-            $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findBy(array(
-                'region' => is_null($form['region']->getData()) ? $request->get('region') : $form['region']->getData(),
-                'hasTransportDelivery' => true
-            ))));
+            $pagerfanta = $em->getRepository('AppBundle:Sale')->getSalesByRegion(is_null($form['region']->getData()) ? $request->get('region') : $form['region']->getData());
             $pagerfanta->setCurrentPage($request->get('page', 1));
 
             return $this->render('salesRequestForm.html.twig', array(
@@ -82,7 +79,7 @@ class DefaultController extends Controller
     {
         $em = $this->container->get('doctrine')->getEntityManager();
 
-        $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:Sale')->findAll()));
+        $pagerfanta = $em->getRepository('AppBundle:Sale')->getSales();
         $pagerfanta->setCurrentPage($request->get('page', 1));
 
         return $this->render('salesRequestForm.html.twig', array(

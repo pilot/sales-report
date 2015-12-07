@@ -18,18 +18,18 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <td>ID</td>
                 <td>Регион</td>
                 <td>Дата закупки</td>
                 <td>Ссылка</td>
+                <td style="text-align: center">Отправляет транспортной компанией</td>
             </tr>
         </thead>
         {% for sale in sales %}
             <tr>
-                <td>{{ sale.id }}</td>
                 <td>{{ regionDescr[sale.region] }}</td>
                 <td>{{ sale.saleDate }}</td>
                 <td>{{ sale.link }}</td>
+                <td style="text-align: center">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
             </tr>
         {% else %}
             {% if app.request.method == 'POST' %}
