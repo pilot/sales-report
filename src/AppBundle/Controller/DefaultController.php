@@ -24,6 +24,7 @@ class DefaultController extends Controller
             $form = $this->createForm(new SalesAddFormType(), $sale);
             $form->submit($request);
             if ($form->isValid()) {
+                $sale->setSaleDate(new \DateTime($sale->getSaleDate()));
                 $em->persist($sale);
                 $em->flush();
 

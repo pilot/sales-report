@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 class SalesAddFormType extends AbstractType
 {
@@ -40,6 +41,9 @@ class SalesAddFormType extends AbstractType
                     new NotBlank([
                         'message' => "Укажите ссылку"
                     ]),
+                    new Url([
+                        'message' => "Неверная ссылка"
+                    ])
                 ),
             ))
             ->add('hasTransportDelivery', 'checkbox', array(

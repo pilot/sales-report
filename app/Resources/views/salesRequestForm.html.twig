@@ -24,30 +24,32 @@
                 <td style="text-align: center">Отправляет транспортной компанией</td>
             </tr>
         </thead>
-        {% for sale in sales %}
-            <tr>
-                <td>{{ regionDescr[sale.region] }}</td>
-                <td>{{ sale.saleDate }}</td>
-                <td>{{ sale.link }}</td>
-                <td style="text-align: center">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
-            </tr>
-        {% else %}
-            {% if app.request.method == 'POST' %}
+        <tbody>
+            {% for sale in sales %}
                 <tr>
-                    <td>Закупок не найдено</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ regionDescr[sale.region] }}</td>
+                    <td>{{ sale.saleDate|date('d-m-Y') }}</td>
+                    <td><a href="{{ sale.link }}">{{ sale.link }}</a></td>
+                    <td style="text-align: center">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
                 </tr>
             {% else %}
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            {% endif %}
-        {% endfor %}
+                {% if app.request.method == 'POST' %}
+                    <tr>
+                        <td>Закупок не найдено</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
     </table>
     {% if sales|length > 0 %}
         <div class="pagerfanta">

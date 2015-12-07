@@ -125,7 +125,7 @@ class Sale
     protected $link;
 
     /**
-     * @ORM\Column(name="sale_date", type="string", nullable=false)
+     * @ORM\Column(name="sale_date", type="datetime", nullable=false)
      */
     protected $saleDate;
 
