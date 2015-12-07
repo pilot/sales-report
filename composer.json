@@ -1,58 +1,35 @@
 {
-    "name": "altermoda/sales-report",
-    "license": "MIT",
-    "type": "project",
-    "description": "Sales-reports on micro-framework",
-    "autoload": {
-        "psr-4": { "": "src/" }
+  "name": "altermoda/sales-report",
+  "license": "MIT",
+  "type": "project",
+  "description": "Sales-reports on micro-framework",
+  "autoload": {
+    "psr-4": { "": "src/" }
+  },
+  "autoload-dev": {
+    "psr-4": { "Tests\\": "tests/" }
+  },
+  "require": {
+    "php": ">=5.5.9",
+    "symfony/symfony": "2.8.*",
+    "doctrine/orm": "~2.2,>=2.2.3",
+    "doctrine/doctrine-bundle": "~1.2",
+    "sensio/framework-extra-bundle": "^3.0.2",
+    "pagerfanta/pagerfanta": "1.0.*@dev",
+    "white-october/pagerfanta-bundle": "1.0.*@dev"
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-bin-dir": "bin",
+    "symfony-var-dir": "var",
+    "symfony-web-dir": "web",
+    "symfony-tests-dir": "tests",
+    "symfony-assets-install": "relative",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
     },
-    "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" }
-    },
-    "require": {
-        "php": ">=5.5.9",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "~2.2,>=2.2.3",
-        "doctrine/doctrine-bundle": "~1.2",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "doctrine/doctrine-migrations-bundle": "dev-master",
-        "doctrine/migrations": "dev-master",
-        "pagerfanta/pagerfanta": "1.0.*@dev",
-        "white-october/pagerfanta-bundle": "1.0.*@dev"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ],
-        "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ]
-    },
-    "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "0.1-dev"
-        }
+    "branch-alias": {
+      "dev-master": "0.1-dev"
     }
+  }
 }
