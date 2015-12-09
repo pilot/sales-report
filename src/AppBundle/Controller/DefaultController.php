@@ -97,4 +97,20 @@ class DefaultController extends Controller
             'regionDescr' => Sale::$regionDescr
         ));
     }
+
+    /**
+     * @Route("/sales/request/list", name="sale_requests_list")
+     */
+    public function requestsListAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:SaleRequest')->findBy(array(), array('createdAt' => 'DESC'))));
+        $pagerfanta->setCurrentPage($request->get('page', 1));
+
+        return $this->render('requestsList.html.twig', array(
+            'requests' => $pagerfanta,
+            'regionDescr' => Sale::$regionDescr
+        ));
+    }
 }
