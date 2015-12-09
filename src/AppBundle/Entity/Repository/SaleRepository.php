@@ -15,7 +15,8 @@ class SaleRepository extends EntityRepository
         $qb->where('(sale.region = :region)
             or (sale.hasTransportDelivery = true)'
         )
-        ->andWhere('sale.saleDate >= CURRENT_DATE()');
+            ->andWhere('sale.saleDate >= CURRENT_DATE()')
+            ->orderBy('sale.id', 'DESC');
 
         $qb->setParameter('region', $region);
 
@@ -26,7 +27,8 @@ class SaleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('sale');
 
-        $qb->where('sale.saleDate >= CURRENT_DATE()');
+        $qb->where('sale.saleDate >= CURRENT_DATE()')
+            ->orderBy('sale.id', 'DESC');
 
         return new Pagerfanta(new DoctrineORMAdapter($qb));
     }

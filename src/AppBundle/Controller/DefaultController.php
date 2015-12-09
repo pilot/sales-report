@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sale;
+use AppBundle\Entity\SaleRequest;
 use AppBundle\Form\Type\SalesAddFormType;
+use AppBundle\Form\Type\SalesRequestFormType;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -52,18 +54,23 @@ class DefaultController extends Controller
     public function requestAction(Request $request)
     {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $form = $this->createForm(new SalesAddFormType());
+        $saleRequest = new SaleRequest();
+        $form = $this->createForm(new SalesRequestFormType(), $saleRequest, ['method' => 'GET']);
 
-        if (!is_null($request->get('region')) || $request->getMethod() == 'POST') {
-            $form->submit($request);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            if (is_null($request->get('page'))) {
+                $em->persist($saleRequest);
+                $em->flush();
+            }
+
             $pagerfanta = $em->getRepository('AppBundle:Sale')->getSalesByRegion(is_null($form['region']->getData()) ? $request->get('region') : $form['region']->getData());
             $pagerfanta->setCurrentPage($request->get('page', 1));
 
             return $this->render('salesRequestForm.html.twig', array(
-                'form' => $this->createForm(new SalesAddFormType())->createView(),
+                'form' => $form->createView(),
                 'sales' => $pagerfanta,
-                'regionDescr' => Sale::$regionDescr,
-                'regionSearch' => is_null($form['region']->getData()) ? $request->get('region', 1) : $form['region']->getData()
+                'regionDescr' => Sale::$regionDescr
             ));
         }
 
@@ -71,7 +78,6 @@ class DefaultController extends Controller
             'form' => $form->createView(),
             'sales' => new Pagerfanta(new ArrayAdapter(array())),
             'regionDescr' => Sale::$regionDescr,
-            'regionSearch' => false
         ));
     }
 

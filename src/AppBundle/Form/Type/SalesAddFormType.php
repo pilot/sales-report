@@ -26,7 +26,7 @@ class SalesAddFormType extends AbstractType
                 ),
             ))
             ->add('saleDate', 'text', array(
-                'label' => 'Дата закупки',
+                'label' => 'Дата завершения закупки',
                 'required' => true,
                 'constraints' => array(
                     new NotBlank([
@@ -35,7 +35,7 @@ class SalesAddFormType extends AbstractType
                 ),
             ))
             ->add('link', 'text', array(
-                'label' => 'Ссылка на форум/группу',
+                'label' => 'Укажите ссылку на Вашу закупку или сайт (помните, что размещение закупок на закрытых форумах и сайтах ограничивает Ваши продажи)',
                 'required' => true,
                 'constraints' => array(
                     new NotBlank([
@@ -47,7 +47,7 @@ class SalesAddFormType extends AbstractType
                 ),
             ))
             ->add('hasTransportDelivery', 'checkbox', array(
-                'label' => 'Отправление транспортной компанией розничным клиентам',
+                'label' => 'Поставьте галочку, если Вы отправляете заказы в другие регионы.',
                 'required' => false
             ));
     }

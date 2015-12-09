@@ -8,6 +8,10 @@ html, body {
     text-align: center;
 }
 
+.container > p {
+    margin: 25px;
+}
+
 .form-add .actions {
     margin-top: 20px;
 }
@@ -21,7 +25,8 @@ html, body {
 }
 
 .form-request {
-    margin-top: 40px;
+    margin-top: 25px;
+    margin-bottom: -15px;
 }
 
 .form-request .form-group {
@@ -38,6 +43,20 @@ html, body {
     margin-left: 20px;
 }
 
+.form-request .input-row {
+    float: left;
+    margin-left: 20px;
+}
+
+.form-request .alert {
+    text-align: center;
+}
+
+.form-request .alert ul {
+    padding: 0;
+    margin: 0;
+}
+
 table tbody tr:hover {
     cursor: pointer;
     color: darkcyan;
@@ -48,7 +67,7 @@ table {
 }
 
 form + table {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .form-request .actions + div {
