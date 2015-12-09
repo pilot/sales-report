@@ -12,100 +12,88 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Sale
 {
-    const AMURSKA = 1;
-    const ARHANGELSKA = 2;
-    const ASTRAHANSKA = 3;
-    const BELGORODSKA = 4;
-    const BRYANSKA = 5;
-    const CHELYABINSKA = 6;
-    const IRKUTSKA = 7;
-    const IVANOVSKA = 8;
-    const KALININGRADSKA = 9;
-    const KALUZHSKA = 10;
-    const KEMEROVSKA = 11;
-    const KIROVSKA = 12;
-    const KOSTROMSKA = 13;
-    const KURGANSKA = 14;
-    const KURSKA = 15;
-    const LENINGRADSKA = 16;
-    const LIPECKA = 17;
-    const MAGADANSKA = 18;
-    const MOSKOVSKA = 19;
-    const MURMANSKA = 20;
-    const NIZHEGORODSKA = 21;
-    const NOVGORODSKA = 22;
-    const NOVOSIBIRSKA = 23;
-    const OMSKA = 24;
-    const ORENBURGSKA = 25;
-    const ORLOVSKA = 26;
-    const PENZENSKA = 27;
-    const PSKOVSKA = 28;
-    const ROSTOVSKA = 29;
-    const RYAZANSKA = 30;
-    const SAHALINSKA = 31;
-    const SAMARSKA = 32;
-    const SARATOVSKA = 33;
-    const SMOLENSKA = 34;
-    const SVERDLOVSKA = 35;
-    const TAMBOVSKA = 36;
-    const TOMSKA = 37;
-    const TVERSKA = 38;
-    const TULSKA = 39;
-    const TYUMENSKA = 40;
-    const ULYANOVSKA = 41;
-    const VLADIMIRSKA = 42;
-    const VOLGOGRADSKA = 43;
-    const VOLOGODSKA = 44;
-    const VORONEZHSKA = 45;
-    const YAROSLAVSKA = 46;
-
     public static $regionDescr = array(
-        self::AMURSKA => 'Амурская область',
-        self::ARHANGELSKA => 'Архангельская область',
-        self::ASTRAHANSKA => 'Астраханская область',
-        self::BELGORODSKA => 'Белгородская область',
-        self::BRYANSKA => 'Брянская область',
-        self::CHELYABINSKA => 'Челябинская область',
-        self::IRKUTSKA => 'Иркутская область',
-        self::IVANOVSKA => 'Ивановская область',
-        self::KALININGRADSKA => 'Калининградская область',
-        self::KALUZHSKA => 'Калужская область',
-        self::KEMEROVSKA => 'Кемеровская область',
-        self::KIROVSKA => 'Кировская область',
-        self::KOSTROMSKA => 'Костромская область',
-        self::KURGANSKA => 'Курганская область',
-        self::KURSKA => 'Курская область',
-        self::LENINGRADSKA => 'Ленинградская область',
-        self::LIPECKA => 'Липецкая область',
-        self::MAGADANSKA => 'Магаданская область',
-        self::MOSKOVSKA => 'Московская область',
-        self::MURMANSKA => 'Мурманская область',
-        self::NIZHEGORODSKA => 'Нижегородская область',
-        self::NOVGORODSKA => 'Новгородская область',
-        self::NOVOSIBIRSKA => 'Новосибирская область',
-        self::OMSKA => 'Омская область',
-        self::ORENBURGSKA => 'Оренбургская область',
-        self::ORLOVSKA => 'Орловская область',
-        self::PENZENSKA => 'Пензенская область',
-        self::PSKOVSKA => 'Псковская область',
-        self::ROSTOVSKA => 'Ростовская область',
-        self::RYAZANSKA => 'Рязанская область',
-        self::SAHALINSKA => 'Сахалинская область',
-        self::SAMARSKA => 'Самарская область',
-        self::SARATOVSKA => 'Саратовская область',
-        self::SMOLENSKA => 'Смоленская область',
-        self::SVERDLOVSKA => 'Свердловская область',
-        self::TAMBOVSKA => 'Тамбовская область',
-        self::TOMSKA => 'Томская область',
-        self::TVERSKA => 'Тверская область',
-        self::TULSKA => 'Тульская область',
-        self::TYUMENSKA => 'Тюменская область',
-        self::ULYANOVSKA => 'Ульяновская область',
-        self::VLADIMIRSKA => 'Владимирская область',
-        self::VOLGOGRADSKA => 'Волгоградская область',
-        self::VOLOGODSKA => 'Вологодская область',
-        self::VORONEZHSKA => 'Воронежская область',
-        self::YAROSLAVSKA => 'Ярославская область');
+        'Амурская область',
+        'Архангельская область',
+        'Астраханская область',
+        'Белгородская область',
+        'Брянская область',
+        'Челябинская область',
+        'Иркутская область',
+        'Ивановская область',
+        'Калининградская область',
+        'Калужская область',
+        'Кемеровская область',
+        'Кировская область',
+        'Костромская область',
+        'Курганская область',
+        'Курская область',
+        'Ленинградская область',
+        'Липецкая область',
+        'Магаданская область',
+        'Московская область',
+        'Мурманская область',
+        'Нижегородская область',
+        'Новгородская область',
+        'Новосибирская область',
+        'Омская область',
+        'Оренбургская область',
+        'Орловская область',
+        'Пензенская область',
+        'Псковская область',
+        'Ростовская область',
+        'Рязанская область',
+        'Сахалинская область',
+        'Самарская область',
+        'Саратовская область',
+        'Смоленская область',
+        'Свердловская область',
+        'Тамбовская область',
+        'Томская область',
+        'Тверская область',
+        'Тульская область',
+        'Тюменская область',
+        'Ульяновская область',
+        'Владимирская область',
+        'Волгоградская область',
+        'Вологодская область',
+        'Воронежская область',
+        'Ярославская область',
+        'Алтайский край',
+        'Забайкальский край',
+        'Камчатский край',
+        'Краснодарский край',
+        'Красноярский край',
+        'Пермский край',
+        'Приморский край',
+        'Ставропольский край',
+        'Хабаровский край',
+        'Ненецкий АО',
+        'Ханты-Мансийский АО',
+        'Чукотский АО',
+        'Ямало-Ненецкий АО',
+        'Еврейская АО',
+        'Адыгея',
+        'Алтай',
+        'Башкортостан',
+        'Бурятия',
+        'Дагестан',
+        'Ингушетия',
+        'Кабардино-Балкария',
+        'Калмыкия',
+        'Карачаево-Черкесия',
+        'Карелия',
+        'Коми',
+        'Крым',
+        'Марий Эл',
+        'Саха (Якутия)',
+        'Татарстан',
+        'Тыва',
+        'Удмуртия',
+        'Хакасия',
+        'Чечня',
+        'Чувашия'
+    );
 
     /**
      * @ORM\Column(type="integer")
@@ -133,11 +121,6 @@ class Sale
      * @ORM\Column(type="boolean", name="transport_delivery")
      */
     protected $hasTransportDelivery = false;
-
-    public function __construct()
-    {
-        $this->saleDate = new \DateTime();
-    }
 
     /**
      * Get id

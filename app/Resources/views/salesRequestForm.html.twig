@@ -2,17 +2,26 @@
 
 {% block content %}
     {% if form %}
-        <form action="{{ path('sale_request') }}" method="post" class="form-request">
+        <p>
+            Интернет-магазин-склад Altermoda.ru реализует свои товары через широкую дилерскую сеть.
+            Пожалуйста, выберите регион, укажите Ваш e-mail (подтверждение антиспама) и Вы сможете получить список дилеров в Вашем регионе.
+            </br>
+            Некоторые дилеры имеют пункты выдачи заказов, другие отправляют товары и в другие регионы.
+            </br>
+            Если у Вас есть вопросы или предложения по работе сервиса, направляйте их на info@altermoda.ru
+        </p>
+        <form action="{{ path('sale_request') }}" method="get" class="form-request">
             <fieldset>
                 <div class="form-group">
                     {{ form_label(form.region) }}
                     {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
                 </div>
+                <div class="input-row">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Найти</button>
-                </div>
-                <div>
-                    {% if regionSearch %}<span>Найдено по региону: {{ regionDescr[regionSearch] }}</span>{% endif %}
                 </div>
             </fieldset>
         </form>
@@ -22,9 +31,9 @@
         <thead>
             <tr>
                 <td>Регион</td>
-                <td>Дата закупки</td>
+                <td>Дата завершения закупки</td>
                 <td>Ссылка</td>
-                <td style="text-align: center">Отправляет транспортной компанией</td>
+                <td style="text-align: center">Доставка в другие регионы</td>
             </tr>
         </thead>
         <tbody>

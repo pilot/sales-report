@@ -21,14 +21,6 @@
                     language: 'ru'
                 });
             }
-
-            $('.container').on('click', 'button', function (event) {
-                event.preventDefault();
-
-                var path = $('form').attr('action');
-                $('form').attr('action', path + '?region=' + $('select').val());
-                $('form').submit();
-            });
         });
     </script>
 </body>
