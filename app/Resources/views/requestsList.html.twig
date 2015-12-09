@@ -1,0 +1,34 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>E-mail пользователя</td>
+                <td>Регион</td>
+                <td>Был выполнен:</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{ request.email }}</td>
+                    <td>{{ regionDescr[request.region] }}</td>
+                    <td>{{ request.createdAt|date('d-m-Y H:i:s') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Запросов не найдено</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if requests|length > 0 %}
+        <div class="pagerfanta">
+            {{ pagerfanta(requests, 'twitter_bootstrap') }}
+        </div>
+    {% endif %}
+{% endblock %}
