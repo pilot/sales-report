@@ -50,6 +50,7 @@ html, body {
 
 .form-request .alert {
     text-align: center;
+    padding: 10px;
 }
 
 .form-request .alert ul {

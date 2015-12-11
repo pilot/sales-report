@@ -2,12 +2,13 @@
 
 {% block content %}
     {% if form %}
-        <p>
+        <p style="text-indent: 40px">
             Интернет-магазин-склад Altermoda.ru реализует свои товары через широкую дилерскую сеть.
             Пожалуйста, выберите регион, укажите Ваш e-mail (подтверждение антиспама) и Вы сможете получить список дилеров в Вашем регионе.
             </br>
             Некоторые дилеры имеют пункты выдачи заказов, другие отправляют товары и в другие регионы.
-            </br>
+        </p>
+        <p style="text-indent: 40px">
             Если у Вас есть вопросы или предложения по работе сервиса, направляйте их на info@altermoda.ru
         </p>
         <form action="{{ path('sale_request') }}" method="get" class="form-request">
@@ -19,6 +20,9 @@
                 <div class="input-row">
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email) }}
+                    <div class="alert alert-error {{ form_errors(form.email)|length < 1 ? 'invisible' : '' }}">
+                        {{ form_errors(form.email) }}
+                    </div>
                 </div>
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Найти</button>
