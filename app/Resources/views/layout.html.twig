@@ -44,14 +44,19 @@
             editForm.find('select').val(tr.find('.region-col').data('value'));
             editForm.find('#altermoda_sales_add_saleDate').val(tr.find('.date-col').text());
             editForm.find('#altermoda_sales_add_link').val(tr.find('.link-col').text());
-            editForm.find('#altermoda_sales_add_hasTransportDelivery').val(tr.find('.checkbox-col').text() == 'Да');
+            if (tr.find('.checkbox-col').text() == 'Да') {
+                editForm.find('#altermoda_sales_add_hasTransportDelivery').prop('checked', true);
+            } else {
+                editForm.find('#altermoda_sales_add_hasTransportDelivery').removeAttr('checked');
+            }
+
 
             tr.hide();
             editForm.show();
             editForm.attr('data-id', id);
         });
 
-        $('body').on('click', 'button[type="submit"]', function (event) {
+        $('body').on('click', '.form-tr button[type="submit"]', function (event) {
             event.preventDefault();
 
             var id = editForm.data('id');
