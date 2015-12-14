@@ -31,42 +31,84 @@
         </form>
     {% endif %}
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <td>Регион</td>
-                <td>Дата завершения закупки</td>
-                <td>Ссылка</td>
-                <td style="text-align: center">Доставка в другие регионы</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sale in sales %}
+     {% if editForm %}<form action="{{ path('sale_edit') }}" method="post" {{ form_enctype(editForm) }} class="form-edit">{% endif %}
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{ regionDescr[sale.region] }}</td>
-                    <td>{{ sale.saleDate|date('d-m-Y') }}</td>
-                    <td><a href="{{ sale.link }}">{{ sale.link }}</a></td>
-                    <td style="text-align: center">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
+                    <td>Регион</td>
+                    <td>Дата завершения закупки</td>
+                    <td>Ссылка</td>
+                    <td style="text-align: center">Доставка в другие регионы</td>
                 </tr>
-            {% else %}
-                {% if app.request.method == 'POST' %}
-                    <tr>
-                        <td>Закупок не найдено</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                    <tr class="sale-id-{{ sale.id }}">
+                        <td class="region-col" data-value="{{ sale.region }}">{{ regionDescr[sale.region] }}</td>
+                        <td class="date-col">{{ sale.saleDate|date('d-m-Y') }}</td>
+                        <td class="link-col"><a href="{{ sale.link }}">{{ sale.link }}</a></td>
+                        <td style="text-align: center" class="checkbox-col">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
+                        {% if not form %}<td data-id="{{ sale.id }}"><span class="edit">ред.</span> / <span class="remove">удалить</span></td>{% endif %}
                     </tr>
                 {% else %}
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% if app.request.method == 'POST' %}
+                        <tr>
+                            <td>Закупок не найдено</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% if editForm %}
+                <tr class="form-tr" style="display: none">
+                    <td>
+                        <div class="form-group">
+                            {{ form_widget(editForm.region, {'attr': {'class': 'form-control'} }) }}
+                            <div class="alert alert-error {{ form_errors(editForm.region)|length < 1 ? 'invisible' : '' }}">
+                                {{ form_errors(editForm.region) }}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-row">
+                            <div class="alert alert-error {{ form_errors(editForm.saleDate)|length < 1 ? 'invisible' : '' }}">
+                                {{ form_errors(editForm.saleDate) }}
+                            </div>
+                            {{ form_widget(editForm.saleDate, {'attr': {'class': 'datepicker', 'placeholder': 'Выберите дату' }}) }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-row">
+                            {{ form_widget(editForm.link) }}
+                            <div class="alert alert-error {{ form_errors(editForm.link)|length < 1 ? 'invisible' : '' }}">
+                                {{ form_errors(editForm.link) }}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align: center">
+                        <div class="input-row">
+                            {{ form_widget(editForm.hasTransportDelivery) }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Обновить</button>
+                            <a class="cancel-form" href="#">Отмена</a>
+                        </div>
+                    </td>
+                </tr>
                 {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+     {% if editForm %}</form>{% endif %}
     {% if sales|length > 0 %}
         <div class="pagerfanta">
             {{ pagerfanta(sales, 'twitter_bootstrap') }}

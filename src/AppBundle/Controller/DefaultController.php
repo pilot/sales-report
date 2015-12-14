@@ -10,6 +10,7 @@ use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -57,6 +58,9 @@ class DefaultController extends Controller
         $saleRequest = new SaleRequest();
         $form = $this->createForm(new SalesRequestFormType(), $saleRequest, ['method' => 'GET']);
 
+        $regions = Sale::$regionDescr;
+        sort($regions, SORT_STRING);
+
         $form->handleRequest($request);
         if ($form->isValid()) {
             if (is_null($request->get('page'))) {
@@ -70,14 +74,14 @@ class DefaultController extends Controller
             return $this->render('salesRequestForm.html.twig', array(
                 'form' => $form->createView(),
                 'sales' => $pagerfanta,
-                'regionDescr' => Sale::$regionDescr
+                'regionDescr' => $regions
             ));
         }
 
         return $this->render('salesRequestForm.html.twig', array(
             'form' => $form->createView(),
             'sales' => new Pagerfanta(new ArrayAdapter(array())),
-            'regionDescr' => Sale::$regionDescr,
+            'regionDescr' => $regions,
         ));
     }
 
@@ -91,10 +95,14 @@ class DefaultController extends Controller
         $pagerfanta = $em->getRepository('AppBundle:Sale')->getSales();
         $pagerfanta->setCurrentPage($request->get('page', 1));
 
+        $regions = Sale::$regionDescr;
+        sort($regions, SORT_STRING);
+
         return $this->render('salesRequestForm.html.twig', array(
             'form' => false,
             'sales' => $pagerfanta,
-            'regionDescr' => Sale::$regionDescr
+            'regionDescr' => $regions,
+            'editForm' => $this->createForm(new SalesAddFormType())->createView()
         ));
     }
 
@@ -112,5 +120,54 @@ class DefaultController extends Controller
             'requests' => $pagerfanta,
             'regionDescr' => Sale::$regionDescr
         ));
+    }
+
+    /**
+     * @Route("/sales/delete", name="sale_delete")
+     */
+    public function deleteSaleAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $sale = $em->getRepository('AppBundle:Sale')->find($request->get('id'));
+        $em->remove($sale);
+        $em->flush();
+
+        return new JsonResponse(true);
+    }
+
+    /**
+     * @Route("/sales/edit", name="sale_edit")
+     */
+    public function editSaleAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $sale = $em->getRepository('AppBundle:Sale')->find($request->get('id'));
+
+        $form = $this->createForm(new SalesAddFormType(), $sale);
+        $form->submit($request);
+        if ($form->isValid()) {
+            $sale->setSaleDate(new \DateTime($sale->getSaleDate()));
+            $em->persist($sale);
+            $em->flush();
+
+            return new JsonResponse([
+                'result' => true
+            ]);
+        }
+        $errors = array();
+        foreach ($form as $child) {
+            if (!$child->isValid()) {
+                foreach ($child->getErrors() as $error) {
+                    $errors[$child->getName()][] = $error->getMessage();
+                }
+            }
+        }
+
+        return new JsonResponse([
+            'result' => false,
+            'errors' => $errors
+        ]);
     }
 }
