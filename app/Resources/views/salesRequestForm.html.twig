@@ -16,6 +16,9 @@
                 <div class="form-group">
                     {{ form_label(form.region) }}
                     {{ form_widget(form.region, {'attr': {'class': 'form-control'} }) }}
+                    <div class="alert alert-error {{ form_errors(form.region)|length < 1 ? 'invisible' : '' }}">
+                        {{ form_errors(form.region) }}
+                    </div>
                 </div>
                 <div class="input-row">
                     {{ form_label(form.email) }}

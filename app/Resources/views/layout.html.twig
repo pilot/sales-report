@@ -13,6 +13,12 @@
     <script type="text/javascript" src="{{ asset('bundles/app/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/js/bootstrap-datepicker.ru.js') }}"></script>
     <script>
+        $('table .link-col a').on('click', function (event) {
+            event.preventDefault();
+
+            window.open($(this).attr('href'), '_blank');
+        });
+
         $(document).ready(function () {
             if ($("input.datepicker").length) {
                 $('.datepicker').datepicker({
