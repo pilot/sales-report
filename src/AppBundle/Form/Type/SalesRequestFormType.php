@@ -21,6 +21,11 @@ class SalesRequestFormType extends AbstractType
                 'empty_value' => 'Выберите регион',
                 'label' => 'Регион',
                 'required' => false,
+                'constraints' => array(
+                    new NotBlank([
+                        'message' => "Укажите регион"
+                    ]),
+                ),
             ))
             ->add('email', 'text', array(
                 'label' => 'Ваш e-mail',
