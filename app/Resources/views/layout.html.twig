@@ -22,6 +22,88 @@
                 });
             }
         });
+
+        var editForm = $('.form-tr');
+        var regionDescr = {{ regionDescr|json_encode|raw }};
+        $('.form-tr').remove();
+
+        $('body').on('click', 'span.edit', function () {
+            $('.form-tr').remove();
+            $('tr').show();
+            var id = $(this).closest('td').data('id');
+            var tr = $(this).closest('tr');
+            tr.after(editForm);
+            if ($("input.datepicker").length) {
+                $('.datepicker').datepicker({
+                    format: 'dd-mm-yyyy',
+                    startDate: '0d',
+                    language: 'ru'
+                });
+            }
+
+            editForm.find('select').val(tr.find('.region-col').data('value'));
+            editForm.find('#altermoda_sales_add_saleDate').val(tr.find('.date-col').text());
+            editForm.find('#altermoda_sales_add_link').val(tr.find('.link-col').text());
+            if (tr.find('.checkbox-col').text() == 'Да') {
+                editForm.find('#altermoda_sales_add_hasTransportDelivery').prop('checked', true);
+            } else {
+                editForm.find('#altermoda_sales_add_hasTransportDelivery').removeAttr('checked');
+            }
+
+
+            tr.hide();
+            editForm.show();
+            editForm.attr('data-id', id);
+        });
+
+        $('body').on('click', '.form-tr button[type="submit"]', function (event) {
+            event.preventDefault();
+
+            var id = editForm.data('id');
+            var tr = editForm.prev();
+            editForm.find('div.alert').addClass('invisible');
+
+            $.ajax({
+                url: "{{ path('sale_edit') }}" + '?id=' + id,
+                data: $('.form-edit').serialize()
+            }).done(function (response) {
+                if (response.result) {
+                    tr.find('.region-col').text(regionDescr[editForm.find('select').val()]);
+                    tr.find('.date-col').text(editForm.find('#altermoda_sales_add_saleDate').val());
+                    tr.find('.link-col a').text(editForm.find('#altermoda_sales_add_link').val());
+                    tr.find('.link-col a').attr('href', editForm.find('#altermoda_sales_add_link').val());
+                    tr.find('.checkbox-col').text($("#altermoda_sales_add_hasTransportDelivery").is(':checked') ? 'Да' : 'Нет');
+
+                    $('.form-tr').remove();
+                    $('tr').show();
+                } else {
+                    if (response.errors.link != undefined) {
+                        $('#altermoda_sales_add_link').next().text(response.errors.link).removeClass('invisible');
+                    }
+                    if (response.errors.region != undefined) {
+                        $('#altermoda_sales_add_region').next().text(response.errors.region).removeClass('invisible');
+                    }
+                }
+            });
+        });
+
+        $('body').on('click', 'span.remove', function () {
+            var id = $(this).closest('td').data('id');
+            var tr = $(this).closest('tr');
+
+            $.ajax({
+                url: "{{ path('sale_delete') }}" + '?id=' + id
+            }).done(function () {
+                tr.fadeOut(1000).remove();
+            });
+        });
+
+        $('body').on('click', 'a.cancel-form', function (event) {
+            event.preventDefault();
+
+            $('.form-tr').remove();
+            $('tr').show();
+        });
     </script>
 </body>
 </html>

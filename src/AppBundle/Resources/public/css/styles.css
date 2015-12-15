@@ -50,6 +50,7 @@ html, body {
 
 .form-request .alert {
     text-align: center;
+    padding: 10px;
 }
 
 .form-request .alert ul {
@@ -74,4 +75,22 @@ form + table {
     position: absolute;
     margin-top: 20px;
     text-decoration: underline;
+}
+
+span.edit:hover {
+    cursor: pointer;
+    color: blue;
+}
+
+span.remove:hover {
+    cursor: pointer;
+    color: red;
+}
+
+.form-tr button {
+    margin-bottom: 10px;
+}
+
+.form-tr button + a {
+    margin: 20px;
 }

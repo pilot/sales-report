@@ -13,9 +13,11 @@ class SalesRequestFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $regions = Sale::$regionDescr;
+        sort($regions, SORT_STRING);
         $builder
             ->add('region', 'choice', array(
-                'choices' => Sale::$regionDescr,
+                'choices' => $regions,
                 'empty_value' => 'Выберите регион',
                 'label' => 'Регион',
                 'required' => false,
@@ -25,7 +27,7 @@ class SalesRequestFormType extends AbstractType
                 'required' => true,
                 'constraints' => array(
                     new Email([
-                        'message' => "Неверный e-mail"
+                        'message' => "Пожалуйста, укажите корректный e-mail"
                     ]),
                     new NotBlank([
                         'message' => "Укажите e-mail"
