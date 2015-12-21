@@ -16,6 +16,7 @@ class SaleRepository extends EntityRepository
             or (sale.hasTransportDelivery = true)'
         )
             ->andWhere('sale.saleDate >= CURRENT_DATE()')
+            ->andWhere('sale.isDisabled = false')
             ->orderBy('sale.id', 'DESC');
 
         $qb->setParameter('region', $region);
@@ -23,12 +24,15 @@ class SaleRepository extends EntityRepository
         return new Pagerfanta(new DoctrineORMAdapter($qb));
     }
 
-    public function getSales()
+    public function getSales($getDisabled)
     {
         $qb = $this->createQueryBuilder('sale');
 
-        $qb->where('sale.saleDate >= CURRENT_DATE()')
-            ->orderBy('sale.id', 'DESC');
+        $qb->where('sale.saleDate >= CURRENT_DATE()');
+        if ($getDisabled) {
+            $qb->andWhere('sale.isDisabled = true');
+        }
+        $qb->orderBy('sale.id', 'DESC');
 
         return new Pagerfanta(new DoctrineORMAdapter($qb));
     }

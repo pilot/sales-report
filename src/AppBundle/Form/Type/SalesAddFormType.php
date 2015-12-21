@@ -51,6 +51,10 @@ class SalesAddFormType extends AbstractType
             ->add('hasTransportDelivery', 'checkbox', array(
                 'label' => 'Поставьте галочку, если Вы отправляете заказы в другие регионы.',
                 'required' => false
+            ))
+            ->add('isDisabled', 'checkbox', array(
+                'label' => 'Отключено',
+                'required' => false
             ));
     }
 

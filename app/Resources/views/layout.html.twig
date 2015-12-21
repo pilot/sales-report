@@ -50,6 +50,11 @@
                 editForm.find('#altermoda_sales_add_hasTransportDelivery').removeAttr('checked');
             }
 
+            if (parseInt(tr.data('disabled'))) {
+                editForm.find('#altermoda_sales_add_isDisabled').prop('checked', true);
+            } else {
+                editForm.find('#altermoda_sales_add_isDisabled').removeAttr('checked');
+            }
 
             tr.hide();
             editForm.show();

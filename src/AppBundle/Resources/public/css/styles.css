@@ -94,3 +94,28 @@ span.remove:hover {
 .form-tr button + a {
     margin: 20px;
 }
+
+.is-disabled-checkbox {
+    margin: 18px 0;
+}
+
+.is-disabled-checkbox label {
+    display: inline-block;
+}
+
+.is-disabled-checkbox input {
+    margin: 0 10px;
+}
+
+span.status {
+    display: block;
+    font-weight: 600;
+}
+
+.filters {
+    margin: 30px 20px -30px;
+}
+
+.filters form {
+    display: inline-block;
+}
