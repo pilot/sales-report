@@ -28,6 +28,7 @@ class DefaultController extends Controller
             $form->submit($request);
             if ($form->isValid()) {
                 $sale->setSaleDate(new \DateTime($sale->getSaleDate()));
+                $sale->setIsDisabled(true);
                 $em->persist($sale);
                 $em->flush();
 
@@ -92,7 +93,7 @@ class DefaultController extends Controller
     {
         $em = $this->container->get('doctrine')->getEntityManager();
 
-        $pagerfanta = $em->getRepository('AppBundle:Sale')->getSales();
+        $pagerfanta = $em->getRepository('AppBundle:Sale')->getSales($request->get('get_disabled', 0));
         $pagerfanta->setCurrentPage($request->get('page', 1));
 
         $regions = Sale::$regionDescr;
@@ -169,5 +170,22 @@ class DefaultController extends Controller
             'result' => false,
             'errors' => $errors
         ]);
+    }
+
+    /**
+     * @Route("/sales/change/state", name="sale_change_state")
+     */
+    public function changeStateSaleAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $sale = $em->getRepository('AppBundle:Sale')->find($request->get('id'));
+        $state = $request->get('state') === 'false';
+        $sale->setIsDisabled($state);
+
+        $em->persist($sale);
+        $em->flush();
+
+        return new JsonResponse(true);
     }
 }

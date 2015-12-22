@@ -56,10 +56,29 @@
                 editForm.find('#altermoda_sales_add_hasTransportDelivery').removeAttr('checked');
             }
 
-
             tr.hide();
             editForm.show();
             editForm.attr('data-id', id);
+        });
+
+        $('body').on('click', 'a.status', function (event) {
+            event.preventDefault();
+
+            var that = $(this);
+            var id = $(this).closest('td').data('id');
+            var tr = $(this).closest('tr');
+            var state = (tr.attr('data-state') === 'disabled');
+
+            $.ajax({
+                url: '{{ path('sale_change_state') }}' + '?id=' + id + '&state=' + state
+            }).done(function () {
+                tr.attr('data-state', state ? 'active' : 'disabled');
+                if (state) {
+                    that.text('Не показывать');
+                } else {
+                    that.text('Показывать');
+                }
+            });
         });
 
         $('body').on('click', '.form-tr button[type="submit"]', function (event) {

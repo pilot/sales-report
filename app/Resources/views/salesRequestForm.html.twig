@@ -32,6 +32,14 @@
                 </div>
             </fieldset>
         </form>
+    {% else %}
+        <div class="filters">
+            <form action="{{ path('sale_list') }}" method="get">
+                <input type="hidden" name="get_disabled" value="1">
+                <button type="submit" class="btn btn-primary" >Отключенные</button>
+            </form>
+            <button class="btn btn-primary"><a style="color: white" href="{{ path('sale_list') }}">Последние</a></button>
+        </div>
     {% endif %}
 
      {% if editForm %}<form action="{{ path('sale_edit') }}" method="post" {{ form_enctype(editForm) }} class="form-edit">{% endif %}
@@ -46,12 +54,17 @@
             </thead>
             <tbody>
                 {% for sale in sales %}
-                    <tr class="sale-id-{{ sale.id }}">
+                    <tr class="sale-id-{{ sale.id }}" data-state="{{ sale.isDisabled ? 'disabled' : 'active' }}">
                         <td class="region-col" data-value="{{ sale.region }}">{{ regionDescr[sale.region] }}</td>
                         <td class="date-col">{{ sale.saleDate|date('d-m-Y') }}</td>
                         <td class="link-col"><a href="{{ sale.link }}">{{ sale.link }}</a></td>
                         <td style="text-align: center" class="checkbox-col">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
-                        {% if not form %}<td data-id="{{ sale.id }}"><span class="edit">ред.</span> / <span class="remove">удалить</span></td>{% endif %}
+                        {% if not form %}
+                            <td data-id="{{ sale.id }}">
+                                <a href="#" class="status">{{ sale.isDisabled ? 'Показывать' : 'Не показывать' }}</a>
+                                <span class="edit">ред.</span> / <span class="remove">удалить</span>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     {% if app.request.method == 'POST' %}

@@ -125,6 +125,11 @@ class Sale
     protected $hasTransportDelivery = false;
 
     /**
+     * @ORM\Column(type="boolean", name="is_disabled", options={"default" = true})
+     */
+    protected $isDisabled = true;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -204,5 +209,26 @@ class Sale
     public function getHasTransportDelivery()
     {
         return $this->hasTransportDelivery;
+    }
+
+    /**
+     *
+     * @param boolean $isDisabled
+     * @return Sale
+     */
+    public function setIsDisabled($isDisabled)
+    {
+        $this->isDisabled = $isDisabled;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    public function getIsDisabled()
+    {
+        return $this->isDisabled;
     }
 }
