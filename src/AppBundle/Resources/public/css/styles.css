@@ -107,7 +107,7 @@ span.remove:hover {
     margin: 0 10px;
 }
 
-span.status {
+a.status {
     display: block;
     font-weight: 600;
 }

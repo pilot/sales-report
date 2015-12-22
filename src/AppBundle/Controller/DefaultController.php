@@ -171,4 +171,21 @@ class DefaultController extends Controller
             'errors' => $errors
         ]);
     }
+
+    /**
+     * @Route("/sales/change/state", name="sale_change_state")
+     */
+    public function changeStateSaleAction(Request $request)
+    {
+        $em = $this->container->get('doctrine')->getEntityManager();
+
+        $sale = $em->getRepository('AppBundle:Sale')->find($request->get('id'));
+        $state = $request->get('state') === 'false';
+        $sale->setIsDisabled($state);
+
+        $em->persist($sale);
+        $em->flush();
+
+        return new JsonResponse(true);
+    }
 }

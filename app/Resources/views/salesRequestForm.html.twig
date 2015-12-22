@@ -51,14 +51,14 @@
             </thead>
             <tbody>
                 {% for sale in sales %}
-                    <tr class="sale-id-{{ sale.id }}" data-disabled="{{ sale.isDisabled }}">
+                    <tr class="sale-id-{{ sale.id }}" data-state="{{ sale.isDisabled ? 'disabled' : 'active' }}">
                         <td class="region-col" data-value="{{ sale.region }}">{{ regionDescr[sale.region] }}</td>
                         <td class="date-col">{{ sale.saleDate|date('d-m-Y') }}</td>
                         <td class="link-col"><a href="{{ sale.link }}">{{ sale.link }}</a></td>
                         <td style="text-align: center" class="checkbox-col">{{ sale.hasTransportDelivery ? 'Да' : 'Нет' }}</td>
                         {% if not form %}
                             <td data-id="{{ sale.id }}">
-                                <span class="status">Статус: {{ sale.isDisabled ? 'Отключено' : 'Активно' }}</span>
+                                <a href="#" class="status">{{ sale.isDisabled ? 'Показывать' : 'Не показывать' }}</a>
                                 <span class="edit">ред.</span> / <span class="remove">удалить</span>
                             </td>
                         {% endif %}
@@ -112,10 +112,6 @@
                         </div>
                     </td>
                     <td>
-                        <div class="is-disabled-checkbox">
-                            {{ form_label(editForm.isDisabled) }}
-                            {{ form_widget(editForm.isDisabled) }}
-                        </div>
                         <div class="actions">
                             <button type="submit" class="btn btn-primary">Обновить</button>
                             <a class="cancel-form" href="#">Отмена</a>
