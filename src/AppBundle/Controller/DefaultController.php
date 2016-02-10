@@ -115,6 +115,7 @@ class DefaultController extends Controller
         $em = $this->container->get('doctrine')->getEntityManager();
 
         $pagerfanta = new Pagerfanta(new ArrayAdapter($em->getRepository('AppBundle:SaleRequest')->findBy(array(), array('createdAt' => 'DESC'))));
+        $pagerfanta->setMaxPerPage(100);
         $pagerfanta->setCurrentPage($request->get('page', 1));
 
         return $this->render('requestsList.html.twig', array(
